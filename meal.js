@@ -5,12 +5,12 @@ const loadMeal = (searchText) => {
 };
 
 const displayMeals = (meals) => {
-  //   console.log(meals.meals);
+  // console.log(meals.meals);
   const mealsContainer = document.getElementById("meals-container");
   mealsContainer.innerText = "";
   const meals1 = meals.meals;
   for (const meal of meals1) {
-    // console.log(meal);
+    console.log(meal);
     const mealDiv = document.createElement("div");
     mealDiv.classList.add("col");
     mealDiv.innerHTML = `
@@ -19,49 +19,46 @@ const displayMeals = (meals) => {
                 <div class="card-body">
                   <h5 class="card-title">${meal.strMeal}</h5>
                   <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <button onClick ="loadIdMeals(${meal.idMeal})" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mealsDetails">
+                     Meals Details
+                  </button>
                 </div>
               </div>`;
 
     mealsContainer.appendChild(mealDiv);
   }
 };
-// disable button and enable button
-// const buttonSub = document.getElementById("btnId");
-// const input = document.getElementById("meal-input");
-// input.addEventListener("keyup", function (event) {
-//   const val = event.target.value;
-//   if (val === "") {
-//     buttonSub.setAttribute("disabled", true);
-//   } else {
-//     buttonSub.removeAttribute("disabled");
-//   }
-// });
 
-// const btnSearch = () => {
-//   if(input.value !== ""){
-//     console.log(input.value, 'input value')
-//     loadMeal(input.value)
-//   }
-// };
-
-
-const input = document.getElementById('meal-input')
-const btnSubmit = document.getElementById('btnId')
-
-input.addEventListener('keyup', function(e){
-  let val = e.target.value
-  if (val === '') {
-    btnSubmit.setAttribute('disabled', true)
+const input = document.getElementById("meal-input");
+const btnSubmit = document.getElementById("btnId");
+input.addEventListener("keyup", function (e) {
+  let val = e.target.value;
+  if (val === "") {
+    btnSubmit.setAttribute("disabled", true);
+  } else {
+    btnSubmit.removeAttribute("disabled");
   }
-  else{
-    btnSubmit.removeAttribute('disabled')
-  }
-})
+});
 
-const btnSearch = ()=>{
-  if (input.value !== '') {
-    loadMeal(input.value)
+const btnSearch = () => {
+  if (input.value !== "") {
+    loadMeal(input.value);
   }
+};
+
+const loadIdMeals = (idMeal) => {
+  console.log(idMeal);
+const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`
+fetch(url)
+.then(res => res.json())
+.then(data => displayIdMeal(data.meals[0]))
+
+};
+
+const displayIdMeal = (Meal) =>{
+ 
+  document.getElementById('mealsDetailsLabel').innerText = Meal.strMeal
+  document.getElementById('str-catagory').innerText = Meal.strCategory
 }
 
 loadMeal("chicken");
