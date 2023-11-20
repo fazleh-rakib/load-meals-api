@@ -48,17 +48,23 @@ const btnSearch = () => {
 
 const loadIdMeals = (idMeal) => {
   console.log(idMeal);
-const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`
-fetch(url)
-.then(res => res.json())
-.then(data => displayIdMeal(data.meals[0]))
-
+  const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`;
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => displayIdMeal(data.meals[0]));
 };
 
-const displayIdMeal = (Meal) =>{
- 
-  document.getElementById('mealsDetailsLabel').innerText = Meal.strMeal
-  document.getElementById('str-catagory').innerText = Meal.strCategory
-}
+const displayIdMeal = (Meal) => {
+  document.getElementById("mealsDetailsLabel").innerText = Meal.strMeal;
+  const mealDetails = document.getElementById("str-catagory");
+  mealDetails.innerHTML = `
+  <h2>Area : ${Meal.strArea} </h2>
+  <h2>Catagory : ${Meal.strCategory} </h2>
+   <p> Ingredient-1 : ${Meal.strIngredient1}</p>
+   <p> Ingredient-2 : ${Meal.strIngredient2}</p>
+   <p> Ingredient-3 : ${Meal.strIngredient3}</p>
+   <p> Ingredient-4 : ${Meal.strIngredient4}</p>
+  `;
+};
 
 loadMeal("chicken");
