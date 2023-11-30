@@ -4,6 +4,8 @@ const loadMeal = (searchText) => {
     .then((data) => displayMeals(data));
 };
 
+
+
 const displayMeals = (meals) => {
   // console.log(meals.meals);
   const mealsContainer = document.getElementById("meals-container");
@@ -20,10 +22,13 @@ const displayMeals = (meals) => {
                   <h5 class="card-title">${meal.strMeal}</h5>
                   <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                 <button onClick ="loadIdMeals(${meal.idMeal})" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mealsDetails">
+                 
                      Meals Details
                   </button>
                 </div>
               </div>`;
+
+              // loadIdMeals2 func called in button
 
     mealsContainer.appendChild(mealDiv);
   }
@@ -54,6 +59,13 @@ const loadIdMeals = (idMeal) => {
     .then((data) => displayIdMeal(data.meals[0]));
 };
 
+const loadIdMeals2 = async(idMeal) =>{
+  const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`;
+  const res = await fetch(url)
+  const data = await res.json()
+   displayIdMeal(data.meals[0])
+} 
+
 const displayIdMeal = (Meal) => {
   document.getElementById("mealsDetailsLabel").innerText = Meal.strMeal;
   const mealDetails = document.getElementById("str-catagory");
@@ -64,6 +76,7 @@ const displayIdMeal = (Meal) => {
    <p> Ingredient-2 : ${Meal.strIngredient2}</p>
    <p> Ingredient-3 : ${Meal.strIngredient3}</p>
    <p> Ingredient-4 : ${Meal.strIngredient4}</p>
+   <img class="img-fluid" src="${Meal.strMealThumb}" alt="">
   `;
 };
 
